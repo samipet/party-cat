@@ -4,7 +4,7 @@ export default (catsInvited=0, action) => {
     switch (action.type) {
         case TILE_CLICK:
             if (action.payload.boardZ[action.payload.x][action.payload.y] === 0) {
-                if (action.payload.image === "cat") {
+                if (action.payload.image.startsWith("cat") === true) {
                     return catsInvited + 1;
                 }
             }

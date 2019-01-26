@@ -81,6 +81,7 @@ const mapStateToProps = (state) => {
         level: state.level,
         catFound: state.catFound,
         catsInvited: state.catsInvited,
+        catGuests: state.catGuests,
         gameOverReason: state.gameOverReason,
         annoyance: state.annoyance,
         gameOverInProgress: state.gameOverInProgress

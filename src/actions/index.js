@@ -55,7 +55,7 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
                 direction = 'u';
             }        
         }
-    } while (board[x][y] === "cat" || board[x][y] === "dog" || board[x][y] === "squ");
+    } while (board[x][y].startsWith("cat") === true || board[x][y] === "dog" || board[x][y] === "squ");
 
     let allowedDirection = ['l', 'r', 'u', 'd'];
     let reversedDirection = '';
@@ -92,16 +92,16 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
         }
         //remove direction upon other animal
         for (let j=0; j<allowedDirection.length + 1; j++) {
-            if (allowedDirection[j] === 'l' && (board[x][y-1] === "cat" || board[x][y-1] === "dog" || board[x][y-1] === "squ")) {
+            if (allowedDirection[j] === 'l' && (board[x][y-1].startsWith("cat") === true || board[x][y-1] === "dog" || board[x][y-1] === "squ")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'l');
             }
-            if (allowedDirection[j] === 'r' && (board[x][y+1] === "cat" || board[x][y+1] === "dog" || board[x][y+1] === "squ")) {
+            if (allowedDirection[j] === 'r' && (board[x][y+1].startsWith("cat") === true || board[x][y+1] === "dog" || board[x][y+1] === "squ")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'r');
             }
-            if (allowedDirection[j] === 'u' && (board[x-1][y] === "cat" || board[x-1][y] === "dog" || board[x-1][y] === "squ")) {
+            if (allowedDirection[j] === 'u' && (board[x-1][y].startsWith("cat") === true || board[x-1][y] === "dog" || board[x-1][y] === "squ")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'u');
             }
-            if (allowedDirection[j] === 'd' && (board[x+1][y] === "cat" || board[x+1][y] === "dog" || board[x+1][y] === "squ")) {
+            if (allowedDirection[j] === 'd' && (board[x+1][y].startsWith("cat") === true || board[x+1][y] === "dog" || board[x+1][y] === "squ")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'd');
             }
         }
@@ -156,7 +156,7 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
     return board;
 }
 
-const createLevel = (level) => {
+const createLevel = (level, catInLevel) => {
     let board = [
         ["empty", "empty", "empty", "empty", "empty", "empty"],
         ["empty", "empty", "empty", "empty", "empty", "empty"],
@@ -193,7 +193,7 @@ const createLevel = (level) => {
     }
 
     for (let i = 0; i<cats; i++) {
-        board = addAnimalToBoard(board, "cat", catSteps);
+        board = addAnimalToBoard(board, catInLevel, catSteps);
     }
     for (let i = 0; i<dogs; i++) {
         board = addAnimalToBoard(board, "dog", dogSteps);
@@ -210,8 +210,23 @@ const createLevel = (level) => {
     return board;
 }
 
+const getCatInLevel = (props) => {
+    let catsNotInvited = [];
+    for (let i = 0; i<props.catGuests.length; i++) {
+        if (props.catGuests[i] === 0) {
+            catsNotInvited.push(i+1);
+        }
+    }
+    let catInLevel = "";
+    if (catsNotInvited.length) {
+        catInLevel = "cat" + catsNotInvited[Math.floor((Math.random()*catsNotInvited.length))];
+    }    
+    return catInLevel;
+}
+
 export const nextLevel = (props) => {
-    const board = createLevel(props.level);
+    let catInLevel = getCatInLevel(props);
+    const board = createLevel(props.level, catInLevel);
     return {
         type: NEXT_LEVEL,
         payload: {
@@ -223,7 +238,8 @@ export const nextLevel = (props) => {
 }
 
 export const newGame = () => {
-    const board = createLevel(1);
+    let catInLevel = "cat" + (Math.floor(Math.random()*12) + 1);
+    const board = createLevel(1, catInLevel);
     return {
         type: NEW_GAME,
         payload: {
