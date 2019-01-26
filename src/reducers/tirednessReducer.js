@@ -9,6 +9,11 @@ export default (tiredness=0, action) => {
                     if (newTiredness < 0) {newTiredness = 0};
                     return newTiredness;
                 }
+                if (action.payload.image === "squ") {
+                    let newTiredness = tiredness - 1;
+                    if (newTiredness < 0) {newTiredness = 0};
+                    return newTiredness;
+                }
                 let napAttach = Math.floor(Math.random() * (1 + 1 / 9));
                 if (napAttach) {
                     return tiredness + 1;

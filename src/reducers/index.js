@@ -9,6 +9,7 @@ import levelReducer from './levelReducer';
 import catFoundReducer from './catFoundReducer';
 import gameOverReducer from './gameOverReducer';
 import catsInvitedReducer from './catsInvitedReducer';
+import gameOverInProgressReducer from './gameOverInProgressReducer';
 
 export default combineReducers({
     catFound: catFoundReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
     annoyance: annoyanceReducer,
     tiredness: tirednessReducer,
     boardZ: boardClickReducer,
-    gameOverReason: gameOverReducer
+    gameOverReason: gameOverReducer,
+    gameOverInProgress: gameOverInProgressReducer
 });

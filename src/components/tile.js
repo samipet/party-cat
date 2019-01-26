@@ -138,7 +138,8 @@ const mapStateToProps = (state) => {
         boardZ: state.boardZ,
         annoyance: state.annoyance,
         tiredness: state.tiredness,
-        clicksLeft: state.clicksLeft
+        clicksLeft: state.clicksLeft,
+        gameOverInProgress: state.gameOverInProgress
     }
 }
  

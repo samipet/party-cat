@@ -4,7 +4,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'reactstrap';
 import Tile from './tile';
 import boardStyle from './gamePage.module.css';
-import { tileClick, nextLevel, gameOver, newGame } from '../actions';
+import { tileClick, nextLevel, gameOver, newGame, setGameOver } from '../actions';
  
 class GamePage extends Component {
 
@@ -24,6 +24,7 @@ class GamePage extends Component {
 
     componentDidUpdate() {
         if (this.props.clicksLeft < 0 || this.props.tiredness > 6 || this.props.annoyance > 6 || this.props.catsInvited > 11) {
+            this.props.setGameOver();
             setTimeout(() => {
                 this.props.gameOver(this.props)
             }, 2000);            
@@ -81,8 +82,9 @@ const mapStateToProps = (state) => {
         catFound: state.catFound,
         catsInvited: state.catsInvited,
         gameOverReason: state.gameOverReason,
-        annoyance: state.annoyance
+        annoyance: state.annoyance,
+        gameOverInProgress: state.gameOverInProgress
     }
 }
  
-export default withRouter(connect(mapStateToProps, { tileClick: tileClick, nextLevel: nextLevel, gameOver: gameOver, newGame: newGame })(GamePage));
+export default withRouter(connect(mapStateToProps, { tileClick: tileClick, nextLevel: nextLevel, gameOver: gameOver, newGame: newGame, setGameOver: setGameOver })(GamePage));

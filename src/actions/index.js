@@ -1,6 +1,6 @@
 
 import { CHANGE_BOARD_SIZE } from './types';
-import { TILE_CLICK, NEXT_LEVEL, GAME_OVER, NO_CLICKS_LEFT, NEW_GAME } from './types';
+import { TILE_CLICK, NEXT_LEVEL, GAME_OVER, NO_CLICKS_LEFT, NEW_GAME, GAME_OVER_IN_PROGRESS } from './types';
 
 export const getBoard = (boardSize) => {
     return {
@@ -267,8 +267,19 @@ export const gameOver = (props) => {
     }
 }
 
+export const setGameOver = () => {
+    return {
+        type: GAME_OVER_IN_PROGRESS
+    }
+}
+
 export const tileClick = (props) => {
-    
+    if (props.gameOverInProgress === true) {
+        return {
+            type: GAME_OVER_IN_PROGRESS
+        }
+    }
+
     if (props.clicksLeft < 1) {
         return {
             type: NO_CLICKS_LEFT
