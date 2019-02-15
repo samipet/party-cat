@@ -1,6 +1,15 @@
-import { TILE_CLICK, NEW_GAME } from '../actions/types';
+import { TILE_CLICK, NEW_GAME, maxCatsInvited } from '../actions/types';
 
-export default (catGuests=[0,0,0,0,0,0,0,0,0,0,0,0], action) => {
+const initializeCatArray = (maxCats) => {
+    let catGuestArray = [];
+    for (let i=0; i<maxCats; i++) {
+        catGuestArray.push(0);
+    }
+    console.log(catGuestArray);
+    return catGuestArray;
+}
+
+export default (catGuests=initializeCatArray(maxCatsInvited), action) => {
     switch (action.type) {
         case TILE_CLICK:
             if (action.payload.boardZ[action.payload.x][action.payload.y] === 0) {
@@ -12,7 +21,7 @@ export default (catGuests=[0,0,0,0,0,0,0,0,0,0,0,0], action) => {
             }
             return catGuests;
         case NEW_GAME:
-            return [0,0,0,0,0,0,0,0,0,0,0,0];
+            return initializeCatArray(maxCatsInvited);
         default:
             return catGuests;
     }

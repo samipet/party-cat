@@ -1,4 +1,4 @@
-import { NEXT_LEVEL, NEW_GAME, TILE_CLICK } from '../actions/types';
+import { NEXT_LEVEL, NEW_GAME, TILE_CLICK, clicksLostFromDog } from '../actions/types';
 
 const setEndImages = (item) => {
     switch (item) {
@@ -32,7 +32,7 @@ export default (board = [
             }
             if (action.payload.image === "dog") {
                 if (!action.payload.dogIntimidated) {
-                    if (action.payload.clicksLeft < 5) {
+                    if (action.payload.clicksLeft < clicksLostFromDog) {
                         newBoard[action.payload.x][action.payload.y] = "dogc";
                     } else {
                         newBoard[action.payload.x][action.payload.y] = "doge";

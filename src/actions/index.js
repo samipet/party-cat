@@ -1,5 +1,5 @@
 
-import { CHANGE_BOARD_SIZE } from './types';
+import { CHANGE_BOARD_SIZE, maxCatsInvited, maxTiredness, maxAnnoyance } from './types';
 import { TILE_CLICK, NEXT_LEVEL, GAME_OVER, NO_CLICKS_LEFT, NEW_GAME, GAME_OVER_IN_PROGRESS } from './types';
 
 export const getBoard = (boardSize) => {
@@ -238,7 +238,7 @@ export const nextLevel = (props) => {
 }
 
 export const newGame = () => {
-    let catInLevel = "cat" + (Math.floor(Math.random()*12) + 1);
+    let catInLevel = "cat" + (Math.floor(Math.random() * maxCatsInvited) + 1);
     const board = createLevel(1, catInLevel);
     return {
         type: NEW_GAME,
@@ -257,7 +257,7 @@ export const gameOver = (props) => {
             }
         }
     }
-    if (props.tiredness > 6) {
+    if (props.tiredness > maxTiredness) {
         return {
             type: GAME_OVER,
             payload: {
@@ -265,7 +265,7 @@ export const gameOver = (props) => {
             }
         }
     }
-    if (props.annoyance > 6) {
+    if (props.annoyance > maxAnnoyance) {
         return {
             type: GAME_OVER,
             payload: {
@@ -273,7 +273,7 @@ export const gameOver = (props) => {
             }
         }
     }
-    if (props.catsInvited > 11) {
+    if (props.catsInvited > maxCatsInvited - 1) {
         return {
             type: GAME_OVER,
             payload: {
@@ -306,16 +306,12 @@ export const tileClick = (props) => {
     let dogIntimidated = false;
 
     if (props.image === "squ") {
-        let squirrelCatchResult = Math.random() * (6 - props.annoyance) / 6 * (20 - props.tiredness) / 20 * 2;
-        console.log("squirrelCatchResult: " + squirrelCatchResult);
-        squirrelCatchResult = Math.floor(squirrelCatchResult);
+        let squirrelCatchResult = Math.floor(Math.random() + (maxAnnoyance - props.annoyance) / maxAnnoyance * 0.25 + (maxTiredness - props.tiredness) / maxTiredness * 0.25);
         if (squirrelCatchResult) {squirrelCatch = true};
     }
 
     if (props.image === "dog") {
-        let dogIntimidationResult = Math.random() * (1 + props.annoyance);
-        console.log("dogIntimidationResult: " + dogIntimidationResult);
-        dogIntimidationResult = Math.floor(dogIntimidationResult);
+        let dogIntimidationResult = Math.floor(Math.random() * (1 + 6 * (props.annoyance / maxAnnoyance)));
         if (dogIntimidationResult) {dogIntimidated = true};
     }
 

@@ -163,7 +163,7 @@ const Tile = (props) => {
     }    
     return (
         <div key={props.x + " " + props.y} onClick={() => props.tileClick(props)}>
-            <img className={tileStyle.image} src={imageType} alt="tile" style={ {position: "relative", width: "148px", visibility: props.z ? "visible" : "hidden"} }/>
+            <img className={tileStyle.image + " " + (props.z ? tileStyle.visible : tileStyle.hidden)} src={imageType} alt="tile"/>
         </div>
     );
 }

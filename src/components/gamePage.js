@@ -5,6 +5,7 @@ import { Container, Row, Col, Button, Progress } from 'reactstrap';
 import Tile from './tile';
 import boardStyle from './gamePage.module.css';
 import { tileClick, nextLevel, gameOver, newGame, setGameOver } from '../actions';
+import { maxTiredness, maxAnnoyance, maxCatsInvited, gameOverDelay } from '../actions/types';
  
 class GamePage extends Component {
 
@@ -23,11 +24,11 @@ class GamePage extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.clicksLeft < 0 || this.props.tiredness > 6 || this.props.annoyance > 6 || this.props.catsInvited > 11) {
+        if (this.props.clicksLeft < 0 || this.props.tiredness > maxTiredness || this.props.annoyance > maxAnnoyance || this.props.catsInvited > maxCatsInvited - 1) {
             this.props.setGameOver();
             setTimeout(() => {
                 this.props.gameOver(this.props)
-            }, 4000);            
+            }, gameOverDelay);            
         }
     }
 
@@ -57,26 +58,25 @@ class GamePage extends Component {
                         <Row>
                             <div className={boardStyle.clicksleft}>
                                 Clicks left: {this.props.clicksLeft}
-                            </div>
-                            
+                            </div>   
                         </Row>
                         <Row>
                             <div className={boardStyle.progresscontainer}>
                                 <div>Tiredness</div>
-                                <Progress value={this.props.tiredness} max="6" color={(this.props.tiredness < 3) ? "success" : (this.props.tiredness < 5) ? "warning" : "danger"}/>
+                                <Progress value={this.props.tiredness} max={maxTiredness} color={(this.props.tiredness < Math.floor(maxTiredness / 3) + 1) ? "success" : (this.props.tiredness < Math.floor(maxTiredness * 2 / 3) + 1) ? "warning" : "danger"}/>
                             </div>
                         </Row>
                         <Row>
                             <div className={boardStyle.progresscontainer}>
                                 <div>Annoyance</div>
-                                <Progress value={this.props.annoyance} max="6" color={(this.props.annoyance < 3) ? "success" : (this.props.annoyance < 5) ? "warning" : "danger"}/>
+                                <Progress value={this.props.annoyance} max={maxAnnoyance} color={(this.props.annoyance < Math.floor(maxAnnoyance / 3) + 1) ? "success" : (this.props.annoyance < Math.floor(maxAnnoyance * 2 / 3) + 1) ? "warning" : "danger"}/>
                             </div>
                         </Row>
                         <Row>
                             <div className={boardStyle.progresscontainer}>
                                 <div>Cats invited</div>
-                                <label>{this.props.catsInvited + " / 12"}</label>
-                                <Progress value={this.props.catsInvited} max="12" color={(this.props.catsInvited < 5) ? "danger" : (this.props.catsInvited < 9) ? "warning" : "success"}/>
+                                <label>{this.props.catsInvited + " / " + maxCatsInvited}</label>
+                                <Progress value={this.props.catsInvited} max={maxCatsInvited} color={(this.props.catsInvited < Math.floor(maxCatsInvited / 3) + 1) ? "danger" : (this.props.catsInvited < Math.floor(maxCatsInvited * 2 / 3) + 1) ? "warning" : "success"}/>
                             </div>
                         </Row>
                     </Col>

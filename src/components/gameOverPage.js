@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Button } from 'reactstrap';
 import { newGame } from '../actions';
+import { maxCatsInvited } from '../actions/types';
+import gameOverStyle from './gameOverPage.module.css';
 import gameOverTired from '../assets/gameOverTired.jpg';
 import gameOverAnnoyed from '../assets/gameOverAnnoyed.jpg';
 import gameOverDog from '../assets/gameOverDog.jpg';
@@ -40,7 +42,7 @@ class GameOverPage extends Component {
     }
 
     componentDidMount() {
-        if (this.props.catsInvited === 12) {
+        if (this.props.catsInvited === maxCatsInvited) {
             this.setState({
                 party: true
             })
@@ -51,37 +53,37 @@ class GameOverPage extends Component {
         if (reason==="annoyed") {
             return (
                 <div>
-                <Row>
-                    <h1 style={ {textAlign: "center", width: "100%"} }>I HATE those %#?@& SQUIRRELS!</h1>
-                    <h3 style={ {textAlign: "center", width: "100%"} }>I'm out of here. I know what I hope for as presents...</h3>
-                </Row>
-                <Row>
-                    <Button onClick={() => this.setState({party: true})}>To the Party</Button>
-                </Row>
+                    <Row>
+                        <h1 className={gameOverStyle.headerannoyed}>I HATE those %#?@& SQUIRRELS!</h1>
+                        <p className={gameOverStyle.textannoyed}>I'm out of here. I know what I hope for as presents...</p>
+                    </Row>
+                    <Row>
+                        <Button onClick={() => this.setState({party: true})}>To the Party</Button>
+                    </Row>
                 </div>
             )
         }
         if (reason==="tired") {
             return (
                 <div>
-                <Row>
-                    <h1 style={ {textAlign: "center", color: "white", width: "100%"} }>Wake me up when it's my Birthday zzZZZ</h1>
-                </Row>
-                <Row>
-                    <Button onClick={() => this.setState({party: true})}>To the Party</Button>
-                </Row>
+                    <Row>
+                        <h1 className={gameOverStyle.headertired}>Wake me up when it's my Birthday zzZZZ</h1>
+                    </Row>
+                    <Row>
+                        <Button onClick={() => this.setState({party: true})}>To the Party</Button>
+                    </Row>
                 </div>          
             )
         }
         if (reason==="dog") {
             return (
                 <div>
-                <Row style={ {textAlign: "center", color: "white"} }>
-                    <h1>I quess I'll have to wait my Birthday in my next life</h1>
-                </Row>
-                <Row>
-                    <Button href="/gamepage" onClick={() => this.props.newGame()} color="success">New Game</Button>
-                </Row>
+                    <Row>
+                        <h1 className={gameOverStyle.headerdog}>I quess I'll have to wait my Birthday in my next life</h1>
+                    </Row>
+                    <Row>
+                        <Button href="/gamepage" onClick={() => this.props.newGame()} color="success">New Game</Button>
+                    </Row>
                 </div>            
             )
         }
@@ -90,12 +92,12 @@ class GameOverPage extends Component {
     partyRender = (catsInvited) => {
         return (
             <div>
-            <Row>
-                <h3 style={ {textAlign: "center", color: "white", width: "100%"} }>Cats invited: {catsInvited} / 12</h3>
-            </Row>
-            <Row>                
-                <Button href="/gamepage" onClick={() => this.props.newGame()} color="success">New Game</Button>
-            </Row>
+                <Row>
+                    <h3 className={gameOverStyle.catsinvited}>Cats invited: {catsInvited} / {maxCatsInvited}</h3>
+                </Row>
+                <Row>                
+                    <Button href="/gamepage" onClick={() => this.props.newGame()} color="success">New Game</Button>
+                </Row>
             </div>
         )
     }
@@ -104,24 +106,24 @@ class GameOverPage extends Component {
         let imageType = getImage(this.props.gameOverReason);
         return (
             <div>
-            <img src={imageType} alt="background" style={ {position: "fixed", width: "100%", height: "100%", display: "inline-block", zIndex: "-1", visibility: !this.state.party ? "visible" : "hidden"} }/>
-            <img src={partyBackground} alt="partybackground" style={ {position: "fixed", width: "100%", height: "100%", display: "inline-block", zIndex: "-1", visibility: this.state.party ? "visible" : "hidden"} }/>
-            <img src={day_hero} alt="day_hero" style={ {position: "absolute", top: "72%", right: "50%", width: "20%", height: "25%", zIndex: "1", visibility: this.state.party ? "visible" : "hidden"} }/>
-            <img src={guest1} alt="guest1" style={ {position: "absolute", top: "65%", right: "2%", width: "20%", height: "30%", zIndex: "1", visibility: this.state.party && this.props.catGuests[0] ? "visible" : "hidden"} }/>
-            <img src={guest2} alt="guest2" style={ {position: "absolute", top: "79%", right: "61%", width: "18%", height: "21%", zIndex: "2", visibility: this.state.party && this.props.catGuests[1] ? "visible" : "hidden"} }/>
-            <img src={guest3} alt="guest3" style={ {position: "absolute", top: "87%", right: "92%", width: "8%", height: "13%", zIndex: "2", visibility: this.state.party && this.props.catGuests[2] ? "visible" : "hidden"} }/>
-            <img src={guest4} alt="guest4" style={ {position: "absolute", top: "20%", right: "80%", width: "20%", height: "45%", zIndex: "1", visibility: this.state.party && this.props.catGuests[3] ? "visible" : "hidden"} }/>
-            <img src={guest5} alt="guest5" style={ {position: "absolute", top: "38%", right: "65%", width: "15%", height: "60%", zIndex: "1", visibility: this.state.party && this.props.catGuests[4] ? "visible" : "hidden"} }/>
-            <img src={guest6} alt="guest6" style={ {position: "absolute", top: "60%", right: "40%", width: "13%", height: "35%", zIndex: "0", visibility: this.state.party && this.props.catGuests[5] ? "visible" : "hidden"} }/>
-            <img src={guest7} alt="guest7" style={ {position: "absolute", top: "70%", right: "0%", width: "13%", height: "30%", zIndex: "2", visibility: this.state.party && this.props.catGuests[6] ? "visible" : "hidden"} }/>
-            <img src={guest8} alt="guest8" style={ {position: "absolute", top: "78%", right: "87%", width: "8%", height: "22%", zIndex: "1", visibility: this.state.party && this.props.catGuests[7] ? "visible" : "hidden"} }/>
-            <img src={guest9} alt="guest9" style={ {position: "absolute", top: "0%", right: "4%", width: "13%", height: "50%", zIndex: "1", visibility: this.state.party && this.props.catGuests[8] ? "visible" : "hidden"} }/>    
-            <img src={guest10} alt="guest10" style={ {position: "absolute", top: "57%", right: "24%", width: "13%", height: "40%", zIndex: "2", visibility: this.state.party && this.props.catGuests[9] ? "visible" : "hidden"} }/>
-            <img src={guest11} alt="guest11" style={ {position: "absolute", top: "75%", right: "32%", width: "14%", height: "24%", zIndex: "0", visibility: this.state.party && this.props.catGuests[10] ? "visible" : "hidden"} }/>
-            <img src={guest12} alt="guest12" style={ {position: "absolute", top: "73%", right: "79%", width: "17%", height: "25%", zIndex: "0", visibility: this.state.party && this.props.catGuests[11] ? "visible" : "hidden"} }/>                        
-            <Container>
-                {(this.state.party) ? this.partyRender(this.props.catsInvited) : this.gameOverTextRender(this.props.gameOverReason)}
-            </Container>
+                <img className={gameOverStyle.background + " " + (!this.state.party ? gameOverStyle.visible : gameOverStyle.hidden)} src={imageType} alt="background"/>
+                <img className={gameOverStyle.background + " " + (this.state.party ? gameOverStyle.visible : gameOverStyle.hidden)} src={partyBackground} alt="partybackground"/>
+                <img className={gameOverStyle.dayhero + " " + (this.state.party ? gameOverStyle.visible : gameOverStyle.hidden)} src={day_hero} alt="day_hero"/>
+                <img className={gameOverStyle.guest1 + " " + (this.state.party && this.props.catGuests[0] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest1} alt="guest1"/>
+                <img className={gameOverStyle.guest2 + " " + (this.state.party && this.props.catGuests[1] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest2} alt="guest2"/>
+                <img className={gameOverStyle.guest3 + " " + (this.state.party && this.props.catGuests[2] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest3} alt="guest3"/>
+                <img className={gameOverStyle.guest4 + " " + (this.state.party && this.props.catGuests[3] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest4} alt="guest4"/>
+                <img className={gameOverStyle.guest5 + " " + (this.state.party && this.props.catGuests[4] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest5} alt="guest5"/>
+                <img className={gameOverStyle.guest6 + " " + (this.state.party && this.props.catGuests[5] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest6} alt="guest6"/>
+                <img className={gameOverStyle.guest7 + " " + (this.state.party && this.props.catGuests[6] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest7} alt="guest7"/>
+                <img className={gameOverStyle.guest8 + " " + (this.state.party && this.props.catGuests[7] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest8} alt="guest8"/>
+                <img className={gameOverStyle.guest9 + " " + (this.state.party && this.props.catGuests[8] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest9} alt="guest9"/>
+                <img className={gameOverStyle.guest10 + " " + (this.state.party && this.props.catGuests[9] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest10} alt="guest10"/>
+                <img className={gameOverStyle.guest11 + " " + (this.state.party && this.props.catGuests[10] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest11} alt="guest11"/>
+                <img className={gameOverStyle.guest12 + " " + (this.state.party && this.props.catGuests[11] ? gameOverStyle.visible : gameOverStyle.hidden)} src={guest12} alt="guest12"/>
+                <Container>
+                    {(this.state.party) ? this.partyRender(this.props.catsInvited) : this.gameOverTextRender(this.props.gameOverReason)}
+                </Container>
             </div>
         );
     }
