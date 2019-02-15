@@ -327,7 +327,8 @@ export const tileClick = (props) => {
             image: props.image,
             boardZ: props.boardZ,
             squirrelCatch: squirrelCatch,
-            dogIntimidated: dogIntimidated
+            dogIntimidated: dogIntimidated,
+            clicksLeft: props.clicksLeft
         }
     }
 }

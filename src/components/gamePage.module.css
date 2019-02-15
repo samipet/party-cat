@@ -13,3 +13,32 @@
     text-align: center;
     background-color: green;
 }
+
+.progresscontainer {
+    width: 80%;
+}
+
+.progresscontainer > div {
+    text-align: center;
+}
+
+.progresscontainer > label {
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    color: black;
+    font-size: .75em;
+}
+
+.clicksleft {
+    width: 80%;
+    text-align: center;
+    font-size: 1.25em;
+    margin-bottom: 1em;
+}
+
+.level {
+    width: 80%;
+    text-align: center;
+    font-size: 2em;
+}

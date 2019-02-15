@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Progress } from 'reactstrap';
 import Tile from './tile';
 import boardStyle from './gamePage.module.css';
 import { tileClick, nextLevel, gameOver, newGame, setGameOver } from '../actions';
@@ -27,7 +27,7 @@ class GamePage extends Component {
             this.props.setGameOver();
             setTimeout(() => {
                 this.props.gameOver(this.props)
-            }, 2000);            
+            }, 4000);            
         }
     }
 
@@ -47,22 +47,37 @@ class GamePage extends Component {
                     </Col>
                     <Col>
                         <div>
-                            <Button disabled={!(this.props.clicksLeft===0 || this.props.catFound===true)} color={!(this.props.clicksLeft===0 || this.props.catFound===true) ? "secondary" : "success"} onClick={() => this.props.nextLevel(this.props)}>Next Level</Button>
+                            <Button disabled={!(this.props.clicksLeft===0 || this.props.catFound===true) || this.props.gameOverInProgress} color={!(this.props.clicksLeft===0 || this.props.catFound===true) ? "secondary" : "success"} onClick={() => this.props.nextLevel(this.props)}>Next Level</Button>
                         </div>
                         <Row>
-                            <h3>level: {this.props.level}</h3>
+                            <div className={boardStyle.level}>
+                                Level: {this.props.level}
+                            </div>
                         </Row>
                         <Row>
-                            clicksLeft: {this.props.clicksLeft}
+                            <div className={boardStyle.clicksleft}>
+                                Clicks left: {this.props.clicksLeft}
+                            </div>
+                            
                         </Row>
                         <Row>
-                            tiredness: {this.props.tiredness}
+                            <div className={boardStyle.progresscontainer}>
+                                <div>Tiredness</div>
+                                <Progress value={this.props.tiredness} max="6" color={(this.props.tiredness < 3) ? "success" : (this.props.tiredness < 5) ? "warning" : "danger"}/>
+                            </div>
                         </Row>
                         <Row>
-                            annoyance: {this.props.annoyance}
+                            <div className={boardStyle.progresscontainer}>
+                                <div>Annoyance</div>
+                                <Progress value={this.props.annoyance} max="6" color={(this.props.annoyance < 3) ? "success" : (this.props.annoyance < 5) ? "warning" : "danger"}/>
+                            </div>
                         </Row>
                         <Row>
-                            catsInvited: {this.props.catsInvited}
+                            <div className={boardStyle.progresscontainer}>
+                                <div>Cats invited</div>
+                                <label>{this.props.catsInvited + " / 12"}</label>
+                                <Progress value={this.props.catsInvited} max="12" color={(this.props.catsInvited < 5) ? "danger" : (this.props.catsInvited < 9) ? "warning" : "success"}/>
+                            </div>
                         </Row>
                     </Col>
                 </Row>

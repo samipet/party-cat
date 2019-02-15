@@ -17,11 +17,11 @@ export default combineReducers({
     catGuests: catGuestsReducer,
     catsInvited: catsInvitedReducer,
     level: levelReducer,
-    boardSize: boardSizeReducer,
-    board: boardReducer,
+    boardSize: boardSizeReducer,    
     clicksLeft: clicksLeftReducer,
     annoyance: annoyanceReducer,
     tiredness: tirednessReducer,
+    board: boardReducer,
     boardZ: boardClickReducer,
     gameOverReason: gameOverReducer,
     gameOverInProgress: gameOverInProgressReducer

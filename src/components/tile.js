@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import tileStyle from './tile.module.css';
 import img_cdl from '../assets/cdl.png';
 import img_cdu from '../assets/cdu.png';
 import img_cdr from '../assets/cdr.png';
@@ -50,7 +51,13 @@ import img_cat10 from '../assets/go10.png';
 import img_cat11 from '../assets/go11.png';
 import img_cat12 from '../assets/go12.png';
 import img_dog from '../assets/dog.png';
+import img_doge from '../assets/doge.gif';
+import img_dogi from '../assets/dogi.gif';
+import img_dogc from '../assets/dogc.gif';
 import img_squ from '../assets/squ.png';
+import img_sque from '../assets/sque.gif';
+import img_squee from '../assets/squee.png';
+import img_squc from '../assets/squc.gif';
 import img_mou from '../assets/mou.png';
 import img_bed from '../assets/bed.png';
 import img_xc from '../assets/xc.png';
@@ -113,7 +120,13 @@ const getImage = (image) => {
         case "cat11": return img_cat11;
         case "cat12": return img_cat12;
         case "dog": return img_dog;
+        case "doge": return img_doge;
+        case "dogi": return img_dogi;
+        case "dogc": return img_dogc;
         case "squ": return img_squ;
+        case "sque": return img_sque;
+        case "squee": return img_squee;
+        case "squc": return img_squc;
         case "mou": return img_mou;
         case "bed": return img_bed;
         case "xc": return img_xc;
@@ -150,7 +163,7 @@ const Tile = (props) => {
     }    
     return (
         <div key={props.x + " " + props.y} onClick={() => props.tileClick(props)}>
-            <img src={imageType} alt="tile" style={ {position: "relative", width: "148px", visibility: props.z ? "visible" : "hidden"} }/>
+            <img className={tileStyle.image} src={imageType} alt="tile" style={ {position: "relative", width: "148px", visibility: props.z ? "visible" : "hidden"} }/>
         </div>
     );
 }
