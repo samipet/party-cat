@@ -10,6 +10,7 @@ export const GAME_OVER_IN_PROGRESS = 'GAME_OVER_IN_PROGRESS';
 export const maxTiredness = 6;
 export const maxAnnoyance = 6;
 export const maxCatsInvited = 12;
+export const uniqueBeds = 4;
 export const initialClicks = 8;
 export const clicksGainedFromNextLevel = 8;
 export const clicksLostFromDog = 5;

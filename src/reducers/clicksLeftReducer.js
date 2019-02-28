@@ -10,7 +10,7 @@ export default (clicksLeft=initialClicks, action) => {
                     }
                     return clicksLeft - clicksLostFromDog;
                 }
-                if (action.payload.image === "squ") {
+                if (action.payload.image === "squ" || action.payload.image === "tri") {
                     if (action.payload.squirrelCatch) {
                         return clicksLeft + clicksGainedFromSquirrel;
                     }                    

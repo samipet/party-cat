@@ -1,6 +1,6 @@
 
 import { CHANGE_BOARD_SIZE, maxCatsInvited, maxTiredness, maxAnnoyance } from './types';
-import { TILE_CLICK, NEXT_LEVEL, GAME_OVER, NO_CLICKS_LEFT, NEW_GAME, GAME_OVER_IN_PROGRESS } from './types';
+import { TILE_CLICK, NEXT_LEVEL, GAME_OVER, NO_CLICKS_LEFT, NEW_GAME, GAME_OVER_IN_PROGRESS, uniqueBeds } from './types';
 
 export const getBoard = (boardSize) => {
     return {
@@ -16,7 +16,12 @@ const addStaticToBoard = (previousBoard, item) => {
         x = Math.floor(Math.random() * 6);
         y = Math.floor(Math.random() * 6);
     } while (board[x][y] !== "empty");
-    board[x][y] = item;
+    if (item === "bed") {
+        let newBed = "bed" + (Math.floor(Math.random() * uniqueBeds) + 1);
+        board[x][y] = newBed;
+    } else {
+        board[x][y] = item;
+    }    
     return board;
 }
 
@@ -55,7 +60,7 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
                 direction = 'u';
             }        
         }
-    } while (board[x][y].startsWith("cat") === true || board[x][y] === "dog" || board[x][y] === "squ");
+    } while (board[x][y].startsWith("cat") === true || board[x][y] === "dog" || board[x][y] === "squ" || board[x][y] === "tri");
 
     let allowedDirection = ['l', 'r', 'u', 'd'];
     let reversedDirection = '';
@@ -92,16 +97,16 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
         }
         //remove direction upon other animal
         for (let j=0; j<allowedDirection.length + 1; j++) {
-            if (allowedDirection[j] === 'l' && (board[x][y-1].startsWith("cat") === true || board[x][y-1] === "dog" || board[x][y-1] === "squ")) {
+            if (allowedDirection[j] === 'l' && (board[x][y-1].startsWith("cat") === true || board[x][y-1] === "dog" || board[x][y-1] === "squ" || board[x][y-1] === "tri")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'l');
             }
-            if (allowedDirection[j] === 'r' && (board[x][y+1].startsWith("cat") === true || board[x][y+1] === "dog" || board[x][y+1] === "squ")) {
+            if (allowedDirection[j] === 'r' && (board[x][y+1].startsWith("cat") === true || board[x][y+1] === "dog" || board[x][y+1] === "squ" || board[x][y+1] === "tri")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'r');
             }
-            if (allowedDirection[j] === 'u' && (board[x-1][y].startsWith("cat") === true || board[x-1][y] === "dog" || board[x-1][y] === "squ")) {
+            if (allowedDirection[j] === 'u' && (board[x-1][y].startsWith("cat") === true || board[x-1][y] === "dog" || board[x-1][y] === "squ" || board[x-1][y] === "tri")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'u');
             }
-            if (allowedDirection[j] === 'd' && (board[x+1][y].startsWith("cat") === true || board[x+1][y] === "dog" || board[x+1][y] === "squ")) {
+            if (allowedDirection[j] === 'd' && (board[x+1][y].startsWith("cat") === true || board[x+1][y] === "dog" || board[x+1][y] === "squ" || board[x+1][y] === "tri")) {
                 allowedDirection = allowedDirection.filter(item => item !== 'd');
             }
         }
@@ -129,9 +134,17 @@ const addAnimalToBoard = (previousBoard, animal, steps) => {
                 default:                
             }
             if (board[x][y] === "empty") {
-                board[x][y] = animal.charAt(0) + reversedDirection + newDirection;
+                if (animal === "tri") {
+                    board[x][y] = "c" + reversedDirection + newDirection;
+                } else {
+                    board[x][y] = animal.charAt(0) + reversedDirection + newDirection;
+                }                
             } else {
-                board[x][y] += animal.charAt(0) + reversedDirection + newDirection;
+                if (animal === "tri") {
+                    board[x][y] += "c" + reversedDirection + newDirection;
+                } else {
+                    board[x][y] += animal.charAt(0) + reversedDirection + newDirection;
+                }                
             }
             switch (newDirection) {
                 case 'l':
@@ -165,29 +178,33 @@ const createLevel = (level, catInLevel) => {
         ["empty", "empty", "empty", "empty", "empty", "empty"],
         ["empty", "empty", "empty", "empty", "empty", "empty"]
     ]
-    let cats, dogs, squirrels, catSteps, dogSteps, squirrelSteps, mice, beds = 0;
+    let cats, dogs, squirrels, tricksters, catSteps, dogSteps, squirrelSteps, tricksterSteps, mice, beds = 0;
     if (level < 4) {
         cats = 1; catSteps = 4 + Math.floor(Math.random() * 2);
         dogs = 1; dogSteps = 4 + Math.floor(Math.random() * 2);
         squirrels = 1; squirrelSteps = 4 + Math.floor(Math.random() * 2);
+        tricksters = 0; tricksterSteps = 4 + Math.floor(Math.random() * 2);
         mice = 2;
         beds = 3;
     } else if (level < 8) {
         cats = 1; catSteps = 4 + Math.floor(Math.random() * 3);
         dogs = 1; dogSteps = 4 + Math.floor(Math.random() * 3);
         squirrels = 1; squirrelSteps = 4 + Math.floor(Math.random() * 3);
+        tricksters = 0; tricksterSteps = 4 + Math.floor(Math.random() * 3);
         mice = 1;
         beds = 2;        
     } else if (level < 12) {
         cats = 1; catSteps = 4 + Math.floor(Math.random() * 2);
         dogs = 2; dogSteps = 4 + Math.floor(Math.random() * 3);
         squirrels = 2; squirrelSteps = 4 + Math.floor(Math.random() * 3);
+        tricksters = 0; tricksterSteps = 4 + Math.floor(Math.random() * 2);
         mice = 1;
         beds = 2;        
     } else {
         cats = 1; catSteps = 4 + Math.floor(Math.random() * 2);
         dogs = 2; dogSteps = 4 + Math.floor(Math.random() * 3);
-        squirrels = 2; squirrelSteps = 4 + Math.floor(Math.random() * 3);
+        squirrels = 1; squirrelSteps = 4 + Math.floor(Math.random() * 3);
+        tricksters = 1; tricksterSteps = 4 + Math.floor(Math.random() * 2);
         mice = 1;
         beds = 1;
     }
@@ -200,7 +217,10 @@ const createLevel = (level, catInLevel) => {
     }
     for (let i = 0; i<squirrels; i++) {
         board = addAnimalToBoard(board, "squ", squirrelSteps);
-    }    
+    }
+    for (let i = 0; i<tricksters; i++) {
+        board = addAnimalToBoard(board, "tri", tricksterSteps);
+    }
     for (let i = 0; i<mice; i++) {
         board = addStaticToBoard(board, "mou");
     }
@@ -305,7 +325,7 @@ export const tileClick = (props) => {
     let squirrelCatch = false;
     let dogIntimidated = false;
 
-    if (props.image === "squ") {
+    if (props.image === "squ"  || props.image === "tri") {
         let squirrelCatchResult = Math.floor(Math.random() + (maxAnnoyance - props.annoyance) / maxAnnoyance * 0.25 + (maxTiredness - props.tiredness) / maxTiredness * 0.25);
         if (squirrelCatchResult) {squirrelCatch = true};
     }

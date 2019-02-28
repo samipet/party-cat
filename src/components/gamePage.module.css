@@ -42,3 +42,19 @@
     text-align: center;
     font-size: 2em;
 }
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.napattack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    z-index: 1;
+}

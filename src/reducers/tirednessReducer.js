@@ -4,12 +4,12 @@ export default (tiredness=0, action) => {
     switch (action.type) {
         case TILE_CLICK:
             if (action.payload.boardZ[action.payload.x][action.payload.y] === 0) {
-                if (action.payload.image === "bed") {
+                if (action.payload.image.startsWith("bed") === true) {
                     let newTiredness = tiredness - tirednessReducedFromBed;
                     if (newTiredness < 0) {newTiredness = 0};
                     return newTiredness;
                 }
-                if (action.payload.image === "squ") {
+                if (action.payload.image === "squ" || action.payload.image === "tri") {
                     let newTiredness = tiredness - tirednessReducedFromSquirrel;
                     if (newTiredness < 0) {newTiredness = 0};
                     return newTiredness;

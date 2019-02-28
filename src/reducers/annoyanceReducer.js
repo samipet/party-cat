@@ -4,7 +4,7 @@ export default (annoyance=0, action) => {
     switch (action.type) {
         case TILE_CLICK:
             if (action.payload.boardZ[action.payload.x][action.payload.y] === 0) {
-                if (action.payload.image === "squ") {
+                if (action.payload.image === "squ" || action.payload.image === "tri") {
                     if (action.payload.squirrelCatch) {
                         return annoyance;
                     }

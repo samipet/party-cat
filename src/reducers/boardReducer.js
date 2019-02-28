@@ -6,6 +6,10 @@ const setEndImages = (item) => {
             return "squee"
         case "squc":
             return "empty"
+        case "trie":
+            return "squee"
+        case "tric":
+            return "trice"
         case "doge":
             return "empty"
         case "dogi":
@@ -27,7 +31,7 @@ export default (board = [
         case TILE_CLICK:
             let newBoard = [...board];
             //Set previously run animations to end images to prevent looping again
-            if (action.payload.image === "squ" || action.payload.image === "dog") {
+            if (action.payload.image === "squ" || action.payload.image === "tri" || action.payload.image === "dog") {
                 newBoard = newBoard.map(row => row.map(setEndImages));
             }
             if (action.payload.image === "dog") {
@@ -46,6 +50,13 @@ export default (board = [
                     newBoard[action.payload.x][action.payload.y] = "sque";
                 } else {
                     newBoard[action.payload.x][action.payload.y] = "squc";
+                }
+            }
+            if (action.payload.image === "tri") {
+                if (!action.payload.squirrelCatch) {
+                    newBoard[action.payload.x][action.payload.y] = "trie";
+                } else {
+                    newBoard[action.payload.x][action.payload.y] = "tric";
                 }
             }
             return newBoard;
